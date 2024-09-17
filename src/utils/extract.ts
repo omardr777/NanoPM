@@ -18,3 +18,13 @@ export const extractZip = (zipPath: string, extractPath: string) => {
     .pipe(unzipper.Extract({ path: extractPath }))
     .promise();
 };
+
+export const extractFile = async (filePath: string, packagePath: string) => {
+  if (filePath.endsWith("tgz")) {
+    await extractTarball(filePath, packagePath);
+  } else if (filePath.endsWith("zip")) {
+    await extractZip(filePath, packagePath);
+  } else {
+    throw new Error(`Unsupported file format: ${filePath}`);
+  }
+};
